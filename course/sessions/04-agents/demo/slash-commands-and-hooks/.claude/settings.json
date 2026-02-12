@@ -1,0 +1,36 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if echo \"$CC_TOOL_RESULT_FILE_PATH\" | grep -q '\\.csv$'; then head -1 \"$CC_TOOL_RESULT_FILE_PATH\" | awk -F',' '{print \"CSV: \" NF \" columns\"}'; fi"
+          }
+        ]
+      }
+    ],
+    "Notification": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "osascript -e 'display notification \"$CC_NOTIFICATION_MESSAGE\" with title \"Claude Code\"'"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if echo \"$CC_TOOL_INPUT_COMMAND\" | grep -qE 'rm\\s+-rf|sudo|chmod 777'; then echo 'BLOCK: опасная команда заблокирована'; exit 1; fi"
+          }
+        ]
+      }
+    ]
+  }
+}
