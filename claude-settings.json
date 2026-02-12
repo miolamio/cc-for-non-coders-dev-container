@@ -1,0 +1,43 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls:*)",
+      "Bash(find:*)",
+      "Bash(cat:*)",
+      "Bash(head:*)",
+      "Bash(tail:*)",
+      "Bash(wc:*)",
+      "Bash(mkdir:*)",
+      "Bash(cp:*)",
+      "Bash(mv:*)",
+      "Bash(touch:*)",
+      "Bash(python3:*)",
+      "Bash(node:*)",
+      "Bash(npm:*)",
+      "Bash(npx:*)",
+      "Bash(pip3:*)",
+      "Bash(git:*)",
+      "Bash(echo:*)",
+      "Bash(cd:*)",
+      "Read",
+      "Edit",
+      "Write",
+      "Glob",
+      "Grep",
+      "WebSearch"
+    ],
+    "deny": [
+      "Bash(rm -rf /)",
+      "Bash(sudo:*)",
+      "Bash(chmod 777:*)",
+      "Bash(curl:*)|Bash(wget:*)"
+    ]
+  },
+  "env": {
+    "ANTHROPIC_BASE_URL": "https://api.z.ai/api/anthropic",
+    "ANTHROPIC_DEFAULT_OPUS_MODEL": "GLM-4.7",
+    "ANTHROPIC_DEFAULT_SONNET_MODEL": "GLM-4.7",
+    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "GLM-4.5-Air",
+    "API_TIMEOUT_MS": "3000000"
+  }
+}

@@ -1,0 +1,9 @@
+# Build context (copied by run.sh, not tracked in git)
+course/
+skills/
+
+# Environment (may contain API keys)
+.env
+
+# macOS
+.DS_Store

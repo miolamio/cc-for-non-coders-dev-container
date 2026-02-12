@@ -1,0 +1,14 @@
+{
+  "editor.fontSize": 14,
+  "editor.wordWrap": "on",
+  "editor.minimap.enabled": false,
+  "terminal.integrated.fontSize": 14,
+  "terminal.integrated.defaultProfile.linux": "bash",
+  "files.autoSave": "afterDelay",
+  "files.autoSaveDelay": 1000,
+  "workbench.startupEditor": "readme",
+  "workbench.colorTheme": "Default Dark+",
+  "explorer.confirmDelete": false,
+  "explorer.confirmDragAndDrop": false,
+  "security.workspace.trust.enabled": false
+}
