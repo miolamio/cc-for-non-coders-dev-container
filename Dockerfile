@@ -1,7 +1,7 @@
 FROM ubuntu:22.04
 
-ARG CODE_SERVER_VERSION=4.108.2
-ARG NODE_VERSION=20
+ARG CODE_SERVER_VERSION=4.109.2
+ARG NODE_VERSION=22
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV LANG=C.UTF-8
@@ -14,8 +14,6 @@ RUN apt-get update && apt-get install -y \
     git \
     sudo \
     locales \
-    python3.11 \
-    python3.11-venv \
     python3-pip \
     jq \
     unzip \
@@ -35,9 +33,13 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/* \
     && ln -s /usr/bin/python3 /usr/bin/python
 
-# Node.js 20
-RUN curl -fsSL https://deb.nodesource.com/setup_${NODE_VERSION}.x | bash - \
-    && apt-get install -y nodejs \
+# Node.js 22 (manual repo setup — NodeSource setup scripts deprecated)
+RUN mkdir -p /etc/apt/keyrings \
+    && curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key \
+        | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg \
+    && echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_${NODE_VERSION}.x nodistro main" \
+        > /etc/apt/sources.list.d/nodesource.list \
+    && apt-get update && apt-get install -y nodejs \
     && rm -rf /var/lib/apt/lists/*
 
 # code-server (VS Code in browser)
@@ -49,8 +51,8 @@ RUN curl -fsSL https://raw.githubusercontent.com/filebrowser/get/master/get.sh |
 # Claude Code CLI
 RUN npm install -g @anthropic-ai/claude-code
 
-# npm packages used by Skills (docx/pptx generation)
-RUN npm install -g docx pptxgenjs
+# npm packages used by Skills (docx/pptx generation, web bundling)
+RUN npm install -g docx pptxgenjs parcel @parcel/config-default html-inline
 
 # Python packages used by Skills
 RUN pip3 install --no-cache-dir \
@@ -74,7 +76,9 @@ RUN pip3 install --no-cache-dir \
     pdf2image \
     "markitdown[pptx]" \
     pytesseract \
-    playwright
+    playwright \
+    defusedxml \
+    PyYAML
 
 # Create user
 RUN useradd -m -s /bin/bash -G sudo coder \
