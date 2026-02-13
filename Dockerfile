@@ -150,6 +150,8 @@ RUN npx -y @anthropic-ai/mcp-server-filesystem --help 2>/dev/null || true
 # Port 8080 = auth gateway (single entry point)
 EXPOSE 8080
 
+# Node.js 22 no longer auto-resolves global modules; scripts need NODE_PATH
+ENV NODE_PATH="/usr/lib/node_modules"
 ENV PASSWORD=""
 ENV ANTHROPIC_AUTH_TOKEN=""
 ENV ANTHROPIC_BASE_URL="https://api.z.ai/api/anthropic"
